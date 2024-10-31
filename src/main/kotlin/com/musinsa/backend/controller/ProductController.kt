@@ -11,14 +11,14 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping
 class ProductController(
     private val productService: ProductService,
 ) {
     /**
      * 1. 카테고리별 최저가격 브랜드와 상품 가격, 총액을 조회하는 API
      */
-    @GetMapping("/lowest-price")
+    @GetMapping("/category/lowest-price")
     fun getLowestPriceByCategories(): ResponseEntity<CategoryPriceResponse> {
         return ResponseEntity.ok(productService.findLowestPriceByCategories())
     }
@@ -26,7 +26,7 @@ class ProductController(
     /**
      * 2. 단일 브랜드로 모든 카테고리 상품을 구매할 때 최저가격 브랜드와 총액을 조회하는 API
      */
-    @GetMapping("/lowest-price/brand")
+    @GetMapping("/brand/lowest-price")
     fun getLowestPriceBrand(): ResponseEntity<LowestPriceResponse> {
         val findLowestPriceBrand : BrandTotalSummary? = productService.findLowestPriceBrand()
         return ResponseEntity.ok(LowestPriceResponse(findLowestPriceBrand!!))
